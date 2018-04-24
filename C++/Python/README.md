@@ -1,7 +1,7 @@
 ### Reversing.ID Code-Interop
 * Invoker: C++
 * Called: Python
-* Technique: JNI
+* Technique: Embedding
 
 Invocation Steps:
 - Initialize Python VM with Py_Initialize()
