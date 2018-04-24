@@ -1,5 +1,10 @@
 /**
 Calling Java code from C++
+Tested on:
+    - Oracle Java JDK 8 and Ms. Visual Studio 2017 Community Ed.
+
+All experiment is using execution schema "load .class file"
+See also "schema.cpp" inside directory "schemas" for other schemas.
 
 Include:
     - $JDK/include
@@ -29,46 +34,48 @@ Notes:
 #include <iostream>
 #include <jni.h>
 
+//========================== Static & Globals ==========================
+
+
+//========================== Helper  Function ==========================
+
 /*
 Before using JNI in C++, load and initialize the Java Virtual Machine (JVM).
 Then load the Java bytecode, which will be executed by the JVM.
 */
 JNIEnv* create_vm(JavaVM** jvm);
 
+//=====================================================================
+
 int main()
 {
-    using namespace std;
-    JavaVM *jvm;                 // Pointer to the JVM (Java Virtual Machine)
-    JNIEnv *env;                 // Pointer to native interface
+    JavaVM       *jvm;                 // Pointer to the JVM (Java Virtual Machine)
+    JNIEnv       *env;                 // Pointer to native interface
+    jclass       cls, javclass;
+    jmethodID    magic, hello, multi, ctor, showid;
 
     //===== Prepare loading of Java VM =====
     env = create_vm(&jvm);
 
     //===== Doing something with JVM =====
-    jclass       cls, javclass;
-    jmethodID    magic, hello, multi, ctor, showid;
-    jstring      jstr;
-    jobjectArray args;
-    char         classpath[1024];
-
     try 
     {
         cls = env->FindClass("called");     // If the class is in package, then use "package/class" notation
 
-        // Example 1: static method that return integer
+    // Example 1: static method that return integer
         magic  = env->GetStaticMethodID(cls, "magic", "()I");
         if (magic == nullptr)
-            cerr << "ERROR: method 'magic' is not found!" << endl;
+            std::cerr << "ERROR: method 'magic' is not found!" << std::endl;
         else 
         {
             jint res = env->CallStaticIntMethod(cls, magic);
-            cout << "Result is: " << res << endl;
+            std::cout << "Result is: " << res << std::endl;
         }
         
-        // Example 2: static method that require array of string
+    // Example 2: static method that require array of string
         hello  = env->GetStaticMethodID(cls, "hello", "([Ljava/lang/String;)V");
         if (hello == nullptr)
-            cerr << "ERROR: method 'hello' is not found!" << endl;
+            std::cerr << "ERROR: method 'hello' is not found!" << std::endl;
         else
         { 
             jobjectArray names = env->NewObjectArray(5,     // constructs java array of 5
@@ -79,32 +86,32 @@ int main()
 			env->DeleteLocalRef(names);                     // release the object
         }
 
-        // Example 3: static method that require multiple argument
+    // Example 3: static method that require multiple argument
         multi  = env->GetStaticMethodID(cls, "multi", "(II)V");
         if (multi == nullptr)
-            cerr << "ERROR: method 'multi' is not found!" << endl;
+            std::cerr << "ERROR: method 'multi' is not found!" << std::endl;
         else 
             env->CallStaticVoidMethod(cls, multi, 10, 30);
     
-        // Example 4: Instantiate a class by constructor
+    // Example 4: Instantiate a class by constructor
         ctor = env->GetMethodID(cls, "<init>", "()V");
         if (ctor == nullptr)
-            cerr << "ERROR: constructor is not found!" << endl;
+            std::cerr << "ERROR: constructor is not found!" << std::endl;
         else 
         {
             jobject called = env->NewObject(cls, ctor); 
             if (called)
             {
         
-        // Example 5: method that return string
+    // Example 5: method that return string
                 showid = env->GetMethodID(cls, "showId", "()Ljava/lang/String;");
                 if (showid == nullptr)
-                    cerr << "ERROR: method 'multi' is not found!" << endl;
+                    std::cerr << "ERROR: method 'multi' is not found!" << std::endl;
                 else
                 {
                     jstring s = (jstring) env->CallObjectMethod(called, showid);
                     const char * id = env->GetStringUTFChars(s, NULL);
-                    cout << id << endl;
+                    std::cout << id <<std:: endl;
                     env->ReleaseStringUTFChars(s, id);
                 }
             }
@@ -112,11 +119,13 @@ int main()
     }
     catch (const std::exception& e)
     {
-        std::cout << e.what() << std::endl;
+        std::cerr << e.what() << std::endl;
     }
 
     //===== Destroy JVM =====
     jvm->DestroyJavaVM();
+
+    return 0;
 }
 
 JNIEnv* create_vm(JavaVM** jvm)

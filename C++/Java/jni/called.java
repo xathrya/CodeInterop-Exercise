@@ -24,7 +24,7 @@ L            fully-qualified-class ;    fully-qualified-class
 
 */
 
-// See the signature with `javap -s -p caled`
+// See the signature with `javap -s -p called`
 public class called
 {
     private static int magic_counter = 135;
