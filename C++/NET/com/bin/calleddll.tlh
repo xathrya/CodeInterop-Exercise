@@ -1,0 +1,66 @@
+﻿// Created by Microsoft (R) C/C++ Compiler Version 14.10.25019.0 (fd87b55f).
+//
+// e:\repo\myrepo\xathrya\codeinterop-exercise\c++\net\com\calleddll.tlh
+//
+// C++ source equivalent of type library CalledDll.tlb
+// compiler-generated file created 04/28/18 at 08:53:01 - DO NOT EDIT!
+
+#pragma once
+#pragma pack(push, 8)
+
+#include <comdef.h>
+
+namespace CalledDll {
+
+//
+// Forward references and typedefs
+//
+
+struct __declspec(uuid("894056e4-306d-3973-858a-50d46dc2c5d7"))
+/* LIBID */ __CalledDll;
+struct __declspec(uuid("e78e28d2-46e4-3316-a283-05953dac260d"))
+/* dual interface */ ICalled;
+struct /* coclass */ Called;
+struct __declspec(uuid("b4b5c935-f787-3f33-810a-54a9a926e05c"))
+/* dual interface */ _Called;
+
+//
+// Smart pointer typedef declarations
+//
+
+_COM_SMARTPTR_TYPEDEF(ICalled, __uuidof(ICalled));
+_COM_SMARTPTR_TYPEDEF(_Called, __uuidof(_Called));
+
+//
+// Type library items
+//
+
+struct __declspec(uuid("e78e28d2-46e4-3316-a283-05953dac260d"))
+ICalled : IDispatch
+{
+    //
+    // Raw methods provided by interface
+    //
+
+      virtual HRESULT __stdcall magic (
+        /*[out,retval]*/ long * pRetVal ) = 0;
+      virtual HRESULT __stdcall hello (
+        /*[in]*/ SAFEARRAY * names ) = 0;
+      virtual HRESULT __stdcall multi (
+        /*[in]*/ long x,
+        /*[in]*/ long y ) = 0;
+};
+
+struct __declspec(uuid("457f9baf-ce1b-372c-9531-dc9757344e74"))
+Called;
+    // [ default ] interface _Called
+    // interface _Object
+    // interface ICalled
+
+struct __declspec(uuid("b4b5c935-f787-3f33-810a-54a9a926e05c"))
+_Called : IDispatch
+{};
+
+} // namespace CalledDll
+
+#pragma pack(pop)

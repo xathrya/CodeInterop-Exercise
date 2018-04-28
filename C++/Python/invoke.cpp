@@ -29,7 +29,6 @@ Run:
 //========================== Static & Globals ==========================
 wchar_t * program;
 
-
 //========================== Helper  Function ==========================
 
 void vm_init(const char* argv0);
@@ -41,7 +40,7 @@ void call_multi_args(PyObject* module, const char* funcname);
 void call_multi_ret(PyObject* module, const char* funcname);
 void instantiate_class(PyObject* module, const char* classname);
 
-//=====================================================================
+//======================================================================
 
 int main(int argc, char* argv[])
 {
@@ -79,12 +78,12 @@ int main(int argc, char* argv[])
     std::cout << std::endl;
     
     // Example 4: call method that return multiple return values
-    std::cout << "Example 5: Function that return multiple values" << std::endl;
+    std::cout << "Example 4: Function that return multiple values" << std::endl;
     call_multi_ret(module, "split_string");
     std::cout << std::endl;
     
     // Example 5: instantiate a class by constructor
-    std::cout << "Example 4: Instantiate a class" << std::endl;
+    std::cout << "Example 5: Instantiate a class" << std::endl;
     instantiate_class(module, "called");
     std::cout << std::endl;
 
@@ -119,7 +118,7 @@ void vm_cleanup()
 
 /*
 Function for Example 1 (Return integer)
-- Case the return value to integer
+- Cast the return value to integer
 */
 void call_return_int(PyObject* module, const char* funcname)
 {
