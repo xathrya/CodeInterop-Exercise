@@ -2,10 +2,10 @@
 Calling C++ code form .NET CLR
 
 Compile:
-    $ csc /out:invoke.exe invoke.cs
+    $ csc /out:invokeCS.exe invoke.cs
 
 Run:
-    $ invoke
+    $ invokeCS
 */
 using System;
 using System.Collections.Generic;

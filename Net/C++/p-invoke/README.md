@@ -1,7 +1,9 @@
 ### Reversing.ID Code-Interop
-* Invoker: C# (.Net)
+* Invoker: C# (.Net), VB (.Net)
 * Called: C++
 * Technique: P/Invoke
+
+There are two invoker here, C# and VB.
 
 Invocation Steps:
 - Create a signature for native function
